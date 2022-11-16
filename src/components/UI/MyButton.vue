@@ -12,10 +12,11 @@
 
 <style scoped>
 .button {
+  text-align: ;
   padding: 10px 15px;
-  color: teal;
+  color: burlywood;
   background-color: transparent;
-  border: 2px solid teal;
+  border: 2px solid burlywood;
   cursor: pointer;
 }
 

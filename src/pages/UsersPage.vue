@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="users">
     <user-list :users="users" />
   </div>
 </template>
@@ -24,11 +24,8 @@ export default {
             _limit: this.limit,
           }
         });
-        console.log(responce.data);
 
         this.users = responce.data;
-
-        console.log(this.users);
       } catch (error) {
 
       }
@@ -41,5 +38,7 @@ export default {
 </script>
 
 <style scoped>
-
+.users{
+  padding: 20px;
+}
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>Main page</h1>
+  <div class="main">
+    <h1>Test users page</h1>
   </div>
 </template>
 
@@ -11,5 +11,7 @@
 </script>
 
 <style scoped>
-
+.main{
+  padding: 20px;
+}
 </style>
