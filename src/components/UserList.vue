@@ -3,12 +3,13 @@
     class="users__list"
     v-if="users.length > 0"
   >
-    <h1>Users list</h1>
     <user-item
       v-for="user in users"
       :user="user"
       :key="user.id"
     />
+
+
   </div>
   <strong
     v-else
@@ -22,12 +23,12 @@ import UserItem from './UserItem.vue';
 export default {
   components: {UserItem},
   props: {
-      users: {
-        type: Array,
-        required: true,
-      }
-    }
+    users: {
+      type: Array,
+      required: true,
+    },
   }
+}
 </script>
 
 <style scoped>

@@ -1,6 +1,6 @@
 <template>
+  <nav-bar/>
   <div class="app">
-    <nav-bar/>
     <router-view></router-view>
   </div>
 </template>
@@ -23,5 +23,6 @@ ul{
 }
 
 .app {
+  padding: 20px;
 }
 </style>

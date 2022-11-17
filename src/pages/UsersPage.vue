@@ -1,19 +1,48 @@
 <template>
   <div class="users">
-    <user-list :users="users" />
+    <h1 class="users-title">Users list</h1>
+
+    <my-button
+      class="create-user__button"
+      @click="showModal"
+    >Create new user</my-button>
+
+    <user-list
+      :users="users"
+    />
+  </div>
+
+  <my-dialog v-model:show="modalVisible">
+    <new-user-form
+    />
+  </my-dialog>
+
+  <div>
+    <my-button
+      v-for="pageNumber in totalPages"
+      :key="pageNumber"
+      :class="{
+      'current-page': pageNumber === page
+      }"
+      @click="changePage(pageNumber)"
+    >{{pageNumber}}</my-button>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import UserList from '@/components/UserList.vue';
+import NewUserForm from '@/components/NewUserForm.vue';
 
 export default {
-  components: { UserList },
+  components: { UserList, NewUserForm },
   data() {
     return {
       users: [],
       limit: 5,
+      page: 1,
+      totalPages: 0,
+      modalVisible: false,
     }
   },
   methods: {
@@ -21,15 +50,33 @@ export default {
       try {
         const responce = await axios.get('https://jsonplaceholder.typicode.com/users', {
           params: {
+            _page: this.page,
             _limit: this.limit,
           }
         });
 
         this.users = responce.data;
+        this.totalPages = Math.ceil(responce.headers['x-total-count'] / this.limit)
       } catch (error) {
-
+        console.log(error);
       }
-    }
+    },
+    // async createUser(newUser) {
+    //   try {
+    //     await axios.post('https://jsonplaceholder.typicode.com/users', newUser);
+
+    //     console.log(user);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
+    changePage(pageNumber) {
+      this.page = pageNumber;
+      this.fetchUsers();
+    },
+    showModal() {
+      this.modalVisible = true;
+    },
   },
   mounted() {
     this.fetchUsers()
@@ -38,7 +85,12 @@ export default {
 </script>
 
 <style scoped>
-.users{
-  padding: 20px;
+.current-page{
+  border: 2px solid rgb(230, 160, 69);
+  background-color: ghostwhite;
+}
+
+.users-title, .create-user__button{
+  margin-bottom: 20px;
 }
 </style>

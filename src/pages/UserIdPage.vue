@@ -50,9 +50,7 @@ export default {
 </script>
 
 <style scoped>
-.user{
-  padding: 20px;
-}
+
 
 .user__data{
   margin-bottom: 10px;

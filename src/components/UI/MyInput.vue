@@ -22,7 +22,6 @@ export default {
 
 <style scoped>
 .input {
-  width: 100%;
   border: 2px solid burlywood;
   padding: 10px 15px;
   margin-bottom: 10px;
