@@ -1,38 +1,43 @@
 <template>
-  <div class="users">
-    <h1 class="users-title">Users list</h1>
+  <section>
 
-    <my-button
-      class="create-user__button"
-      @click="showModal"
-    >Create new user</my-button>
+    <div class="users">
+      <h1 class="users-title">Users list</h1>
 
-    <user-list
-      :users="users"
-    />
-  </div>
+      <my-button
+        class="create-user__button"
+        @click="toggleModal"
+      >Create new user</my-button>
 
-  <my-dialog v-model:show="modalVisible">
-    <new-user-form
-    />
-  </my-dialog>
+      <user-list
+        :users="users"
+      />
+    </div>
 
-  <div>
-    <my-button
-      v-for="pageNumber in totalPages"
-      :key="pageNumber"
-      :class="{
-      'current-page': pageNumber === page
-      }"
-      @click="changePage(pageNumber)"
-    >{{pageNumber}}</my-button>
-  </div>
+    <my-dialog v-model:show="modalVisible">
+      <new-user-form
+      @addUser="addUser"
+      />
+    </my-dialog>
+
+    <div>
+      <my-button
+        v-for="pageNumber in totalPages"
+        :key="pageNumber"
+        :class="{
+        'current-page': pageNumber === page
+        }"
+        @click="changePage(pageNumber)"
+      >{{pageNumber}}</my-button>
+    </div>
+
+  </section>
 </template>
 
 <script>
 import axios from 'axios';
 import UserList from '@/components/UserList.vue';
-import NewUserForm from '@/components/NewUserForm.vue';
+import NewUserForm from '@/components/NewUserForm.vue';;
 
 export default {
   components: { UserList, NewUserForm },
@@ -58,29 +63,24 @@ export default {
         this.users = responce.data;
         this.totalPages = Math.ceil(responce.headers['x-total-count'] / this.limit)
       } catch (error) {
-        console.log(error);
+        this.$toast.error(`Oooops! Something went wrong :C`);
       }
     },
-    // async createUser(newUser) {
-    //   try {
-    //     await axios.post('https://jsonplaceholder.typicode.com/users', newUser);
-
-    //     console.log(user);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
     changePage(pageNumber) {
       this.page = pageNumber;
-      this.fetchUsers();
+      this.fetchUsers()
     },
-    showModal() {
-      this.modalVisible = true;
+    toggleModal() {
+      this.modalVisible = !this.modalVisible;
     },
+    addUser(newUser) {
+      this.users.push(newUser)
+      this.toggleModal();
+    }
   },
   mounted() {
     this.fetchUsers()
-  }
+  },
 }
 </script>
 

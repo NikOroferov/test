@@ -4,11 +4,13 @@
       v-model:value.trim="newUser.name"
       type="text"
       placeholder="Name"
+      required
     />
     <my-input
       v-model:value.trim="newUser.email"
       type="email"
       placeholder="Email"
+      required
     />
     <my-input
       v-model:value.trim="newUser.phone"
@@ -20,11 +22,11 @@
       @click="createUser(newUser)"
     >Create new user</my-button>
   </form>
+
 </template>
 
 <script>
 import axios from 'axios';
-import Vue from 'vue';
 
   export default {
   data() {
@@ -38,36 +40,32 @@ import Vue from 'vue';
       }
   },
   methods: {
-    //  createUser() {
-    //   this.newUser.id = Date.now();
-    //   // this.$emit('create', this.newUser);
-    //   this.newUser = {
-    //     name: '',
-    //     userName: '',
-    //     email: '',
-    //     phone: '',
-    //     id: '',
-    //   }
-    // },
     async createUser(newUser) {
       try {
         this.newUser.id = Date.now();
 
-        await axios.post('https://jsonplaceholder.typicode.com/users', newUser)
+        if (newUser.name && newUser.email) {
 
-        this.newUser = {
-          name: '',
-          email: '',
-          phone: '',
-          id: '',
+          await axios.post('https://jsonplaceholder.typicode.com/users', newUser).then(responce => {
+              this.$toast.success(`User ${responce.data.name} is created!`);
+            })
+
+            this.newUser = {
+              name: '',
+              email: '',
+              phone: '',
+              id: '',
+          }
+
+          this.$emit('addUser', newUser)
         }
 
       } catch (error) {
-        console.log(error);
+        this.$toast.error(`Oooops! We have error ${error.message}`);
       }
     },
   }
-  }
+}
 </script>
 
 <style scoped>

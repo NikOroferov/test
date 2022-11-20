@@ -17,7 +17,9 @@
     </ul>
 
     <div>
-      <my-button @click="$router.push(`/users/${user.id}`)">Full information</my-button>
+      <my-button
+        @click="$router.push(`/users/${user.id}`)"
+      >Full information</my-button>
     </div>
   </div>
 </template>

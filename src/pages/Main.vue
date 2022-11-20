@@ -1,7 +1,7 @@
 <template>
-  <div class="main">
+  <section class="main">
     <h1>Test users page</h1>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -11,7 +11,4 @@
 </script>
 
 <style scoped>
-.main{
-  padding: 20px;
-}
 </style>
