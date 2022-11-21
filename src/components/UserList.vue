@@ -1,20 +1,20 @@
 <template>
-  <div
-    class="users__list"
-    v-if="users.length > 0"
-  >
-    <user-item
-      v-for="user in users"
-      :user="user"
-      :key="user.id"
-    />
+  <div>
+    <div
+      class="users__list"
+      v-if="users.length > 0">
+      <user-item
+        v-for="user in users"
+        :user="user"
+        :key="user.id"
+      />
+    </div>
 
-
+    <strong
+      v-else
+      class="error"
+    >Users are not found</strong>
   </div>
-  <strong
-    v-else
-    class="error"
-  >Users are not found</strong>
 </template>
 
 <script>
@@ -32,5 +32,7 @@ export default {
 </script>
 
 <style scoped>
-
+.error{
+  color: brown;
+}
 </style>

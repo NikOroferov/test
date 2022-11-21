@@ -24,8 +24,9 @@
       <my-button
         v-for="pageNumber in totalPages"
         :key="pageNumber"
+        class="page-number"
         :class="{
-        'current-page': pageNumber === page
+          'current-page': pageNumber === page
         }"
         @click="changePage(pageNumber)"
       >{{pageNumber}}</my-button>
@@ -37,15 +38,15 @@
 <script>
 import axios from 'axios';
 import UserList from '@/components/UserList.vue';
-import NewUserForm from '@/components/NewUserForm.vue';;
+import NewUserForm from '@/components/NewUserForm.vue';
 
 export default {
   components: { UserList, NewUserForm },
   data() {
     return {
       users: [],
-      limit: 5,
       page: 1,
+      limit: 5,
       totalPages: 0,
       modalVisible: false,
     }
@@ -68,23 +69,26 @@ export default {
     },
     changePage(pageNumber) {
       this.page = pageNumber;
-      this.fetchUsers()
+      this.fetchUsers();
     },
     toggleModal() {
       this.modalVisible = !this.modalVisible;
     },
     addUser(newUser) {
-      this.users.push(newUser)
+      this.users.unshift(newUser)
       this.toggleModal();
     }
   },
   mounted() {
     this.fetchUsers()
-  },
+  }
 }
 </script>
 
 <style scoped>
+.page-number{
+  margin-right: 5px;
+}
 .current-page{
   border: 2px solid rgb(230, 160, 69);
   background-color: ghostwhite;
